@@ -1,3 +1,11 @@
+Date.prototype.getMonthName = function() {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "Spetember", "October", "November", "December"];
+
+    return monthNames[this.getMonth()];
+}
+
+
 function getUrl() {
     var d = new Date();
     var month = d.getMonth();
@@ -56,5 +64,6 @@ function getUrl() {
     return baseUrl + path + date + '.html'
 };
 
-$('#date').text()
+var d = new Date();
+$('#date').text(d.getMonthName() + ' ' + d.getDate())
 $('#entry').load(getUrl() + ' .entry-content');
