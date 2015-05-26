@@ -6,63 +6,32 @@ Date.prototype.getMonthName = function() {
 }
 
 
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+
 function getUrl() {
     var d = new Date();
-    var month = d.getMonth();
-    var date = d.getDate();
+        month = d.getMonth(),
+        date = d.getDate(),
+        monthName = d.getMonthName(),
+        baseUrl = 'http://a-calendar-of-wisdom.blogspot.ca';
 
-    var baseUrl = 'http://a-calendar-of-wisdom.blogspot.ca';
+    if (month < 4) {var yearPath = '/2015'}
+    else if (month < 7) {var yearPath = '/2012'}
+    else {var yearPath = '/2014'}
 
-    switch (month) {
-        case 0:
-            path = '/2015/01/january-';
-            break;
-        case 1:
-            path = '/2015/02/february-';
-            break;
-        case 2:
-            path = '/2015/03/march-';
-            break;
-        case 3:
-            path = '/2015/04/april-';
-            break;
-        case 4:
-            path = '/2012/05/may-';
-            break;
-        case 5:
-            if (date < 9)
-                path = '/2012/05/june-';
-            else
-                path = '/2012/06/june-';
-            break;
-        case 6:
-            if (date < 12)
-                path = '/2012/07/july-';
-            else
-                path = '/2012/08/july-';
-            break;
-        case 7:
-            path = '/2014/08/august-';
-            break;
-        case 8:
-            if (date < 15)
-                path = '/2014/09/september-';
-            else
-                path = '/2014/10/september-';
-            break;
-        case 9:
-            path = '/2014/10/october-';
-            break;
-        case 10:
-            path = '/2014/11/november-';
-            break;
-        case 11:
-            path = '/2014/12/december-';
-            break;
-    }
+    if (month == 5 && date < 9) {var monthPath = '/05'}
+    else if (month == 6 && date >= 12) {var monthPath = '/08'}
+    else if (month == 8 && date >= 15) {var monthPath = '/10'}
+    else {var monthPath = '/'+pad(month+1, 2)}
 
-    return baseUrl + path + date + '.html'
+    return baseUrl+yearPath+monthPath+'/'+monthName.toLowerCase()+'-'+date+'.html'
 };
+
 
 var d = new Date();
 $('#date').text(d.getMonthName() + ' ' + d.getDate())
